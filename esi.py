@@ -33,6 +33,7 @@ def get_ship_names(ship_ids):
     return_dict = json.loads(response.content)
     return list(map(lambda item: item["name"], return_dict))
 
+
 def get_item_id(name):
     enc_name = urllib.parse.quote(name)
     url_suffix = "search/?" + \
@@ -48,6 +49,15 @@ def get_item_id(name):
     return return_dict["inventory_type"][0]
 
 
+def get_killmail(km_id, hash):
+    url_suffix = "killmails/%s/%s/" % (km_id, hash)
+    url = append_url(url_suffix)
+    response = requests.get(url)
+    response.raise_for_status()
+    return_dict = json.loads(response.content)
+    return return_dict
+
+
 def append_url(suffix):
     return ("https://esi.evetech.net/latest/" + suffix)
 
@@ -57,3 +67,4 @@ if __name__ == "__main__":
     print(get_ship_name(634))
     print(get_ship_names([29984, 29986, 29988, 29990]))
     print(get_item_id("Tengu"))
+    print(get_killmail(78206963, "1f9ec0fffde5d7ba6da018037c7caed97ea8d0fd"))

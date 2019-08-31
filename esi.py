@@ -13,12 +13,15 @@ def get_corp_id(name):
     response = requests.get(url)
     response.raise_for_status()
     return_dict = json.loads(response.content)
-    return return_dict["corporation"][0]
+    if "corporation" in return_dict.keys():
+        return return_dict["corporation"][0]
+    else:
+        return False
 
 
 def get_ship_name(ship_id):
     body = "[%s]" % ship_id
-    url = append_url("universe/names/")
+    url = append_url("universe/names/?datasource=tranquility")
     response = requests.post(url, body)
     response.raise_for_status()
     return_dict = json.loads(response.content)
@@ -59,11 +62,12 @@ def get_killmail(km_id, hash):
 
 
 def append_url(suffix):
-    return ("https://esi.evetech.net/latest/" + suffix)
+    return "https://esi.evetech.net/latest/" + suffix
 
 
 if __name__ == "__main__":
     print(get_corp_id("EPSYN"))
+    print(get_corp_id("ESDSFGDSF"))
     print(get_ship_name(634))
     print(get_ship_names([29984, 29986, 29988, 29990]))
     print(get_item_id("Tengu"))

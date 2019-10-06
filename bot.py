@@ -39,6 +39,16 @@ async def fuel(ctx):
     await ctx.send(tools.fuel())
 
 
+@bot.command()
+async def rollout(ctx, *, pilot):
+    await ctx.send(tools.roll(pilot))
+
+
+@bot.command()
+async def last_rolled(ctx):
+    await ctx.send(tools.last_rolled())
+
+
 f = open("token", "r")
 token = f.read()
 bot.run(token)

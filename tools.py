@@ -1,6 +1,7 @@
 import zkill
 import esi
 import fuzzworks
+import rollout
 import collections
 from multiprocessing.dummy import Pool as ThreadPool
 from functools import reduce
@@ -111,9 +112,19 @@ def fuel():
     return output
 
 
+def roll(pilot):
+    rollout.rollout(pilot)
+    return "%s Rolled Out" % pilot
+
+
+def last_rolled():
+    return rollout.last_rolled()
+
+
 if __name__ == "__main__":
-    #print(monthly("EPSYN"))
-    #print(fleet_size("EPSYN"))
-    #print(fleet_comp("EPSYN"))
-    #print(pc("gecko", ""))
+    print(monthly("EPSYN"))
+    print(fleet_size("EPSYN"))
+    print(fleet_comp("EPSYN"))
+    print(pc("gecko", ""))
+    print(roll("Romad"))
     print(fuel())

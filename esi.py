@@ -49,7 +49,10 @@ def get_item_id(name):
     response = requests.get(url)
     response.raise_for_status()
     return_dict = json.loads(response.content)
-    return return_dict["inventory_type"][0]
+    if 'inventory_type' not in return_dict:
+        return None
+    else:
+        return return_dict["inventory_type"][0]
 
 
 def get_killmail(km_id, hash):

@@ -1,5 +1,6 @@
 import zkill
 import esi
+import fuzzworks
 import collections
 from multiprocessing.dummy import Pool as ThreadPool
 from functools import reduce
@@ -90,7 +91,29 @@ def get_no_attackers(kill):
     return len(full_kill["attackers"])
 
 
+def pc(item, flag):
+    data = fuzzworks.price_check(item, flag)
+    buy = float(data["buy"]["max"])
+    sell = float(data["sell"]["min"])
+    return "**%s:**\n__Max Buy:__ %s ISK \n__Min Sell:__ %s ISK" % (item, f"{buy:,.0f}", f"{sell:,.0f}")
+
+
+def fuel():
+    output = "**Fuel Prices:**"
+    data = fuzzworks.fuel_prices()
+    for fuel_type in data:
+        output = output + ("\n **%s:**" % fuel_type["type"])
+        for location in fuel_type["data"]:
+            buy = float(location["data"]["buy"]["max"])
+            sell = float(location["data"]["sell"]["min"])
+            output = output + ("\n\t__%s__:\t\tMax Buy: %s ISK\t\tMin Sell: %s ISK" %
+                               (location["location"], f"{buy:,.0f}", f"{sell:,.0f}"))
+    return output
+
+
 if __name__ == "__main__":
-    print(monthly("EPSYN"))
-    print(fleet_size("EPSYN"))
-    print(fleet_comp("EPSYN"))
+    #print(monthly("EPSYN"))
+    #print(fleet_size("EPSYN"))
+    #print(fleet_comp("EPSYN"))
+    #print(pc("gecko", ""))
+    print(fuel())

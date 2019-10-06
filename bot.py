@@ -24,6 +24,21 @@ async def comp(ctx, *, corp_name):
     await ctx.send(tools.fleet_comp(corp_name))
 
 
+@bot.command()
+async def pc(ctx, *, item):
+        await ctx.send(tools.pc(item, "-j"))
+
+
+@bot.command()
+async def pch(ctx, item, hub):
+    await ctx.send(tools.pc(item, hub))
+
+
+@bot.command()
+async def fuel(ctx):
+    await ctx.send(tools.fuel())
+
+
 f = open("token", "r")
 token = f.read()
 bot.run(token)

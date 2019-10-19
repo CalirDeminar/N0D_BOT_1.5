@@ -96,7 +96,7 @@ def pc(item, flag):
     data = fuzzworks.price_check(item, flag)
     buy = float(data["buy"]["max"])
     sell = float(data["sell"]["min"])
-    return f"**{item}:**\n__Max Buy:__ {f'{buy:,.0f}', f'{sell:,.0f}'} ISK \n__Min Sell:__ %s ISK"
+    return f"**{item}:**\n__Max Buy:__ {f'{buy:,.0f}'} ISK \n__Min Sell:__ {f'{sell:,.0f}'} ISK"
 
 
 def fuel():
@@ -114,7 +114,7 @@ def fuel():
 
 def roll(pilot):
     rollout.rollout(pilot)
-    return "%s Rolled Out" % pilot
+    return f"{pilot} Rolled Out"
 
 
 def last_rolled():

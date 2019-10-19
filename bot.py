@@ -25,6 +25,11 @@ async def comp(ctx, *, corp_name):
 
 
 @bot.command()
+async def intel(ctx, *, corp_name):
+    await ctx.send(tools.intel(corp_name))
+
+
+@bot.command()
 async def pc(ctx, *, item):
         await ctx.send(tools.pc(item, "-j"))
 

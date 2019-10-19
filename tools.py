@@ -12,7 +12,7 @@ def monthly(name):
     if corp_id:
         monthly_list = zkill.monthly(corp_id)
         total = monthly_worker(monthly_list)
-        output = "__**%s** - ISK killed this month:__\n %s ISK" % (name, f'{round(total):,}')
+        output = f"__**{name}** - ISK killed this month:__\n {f'{round(total):,}'} ISK"
         return output
     else:
         return "Corp Not Found"
@@ -28,8 +28,8 @@ def fleet_size(name):
     if corp_id:
         kill_list = zkill.kills(corp_id)
         size = fleet_size_worker(kill_list)
-        output = "__**%s - Fleet Size:**__\n__max__: %s\n__min__: %s\n__avg__: %s" \
-                 % (name, size["max"], size["min"], size["avg"])
+        output = f"__** {name} - Fleet Size:**__\n__" \
+                 f"max__: {size['max']}\n__min__: {size['min']}\n__avg__: {size['avg']}"
         return output
     else:
         "Corp Not Found"
@@ -50,9 +50,9 @@ def fleet_comp(name):
     if corp_id:
         kill_list = zkill.kills(corp_id)
         comp = fleet_comp_worker(kill_list)
-        output = "__**%s - Fleet Comp:**__\n" % name
+        output = f"__**{name} - Fleet Comp:**__\n"
         for item in comp:
-            output = output + "__%s__: %s\n" % (item[0], item[1])
+            output = output + f"__{item[0]}__: {item[1]}\n"
         return output
     else:
         "Corp Not Found"
@@ -67,7 +67,7 @@ def fleet_comp_worker(kills):
             flat_ship_list.append(l2)
     flat_ship_list = [x for x in flat_ship_list if x != -1]
     freq_table = collections.Counter(flat_ship_list).most_common(10)
-    #return freq_table
+    # return freq_table
     return list(map(replace_id_with_ship_name, freq_table))
 
 
@@ -96,19 +96,19 @@ def pc(item, flag):
     data = fuzzworks.price_check(item, flag)
     buy = float(data["buy"]["max"])
     sell = float(data["sell"]["min"])
-    return "**%s:**\n__Max Buy:__ %s ISK \n__Min Sell:__ %s ISK" % (item, f"{buy:,.0f}", f"{sell:,.0f}")
+    return f"**{item}:**\n__Max Buy:__ {f'{buy:,.0f}', f'{sell:,.0f}'} ISK \n__Min Sell:__ %s ISK"
 
 
 def fuel():
     output = "**Fuel Prices:**"
     data = fuzzworks.fuel_prices()
     for fuel_type in data:
-        output = output + ("\n **%s:**" % fuel_type["type"])
+        output = output + f"\n **{fuel_type['type']}:**"
         for location in fuel_type["data"]:
             buy = float(location["data"]["buy"]["max"])
             sell = float(location["data"]["sell"]["min"])
-            output = output + ("\n\t__%s__:\t\tMax Buy: %s ISK\t\tMin Sell: %s ISK" %
-                               (location["location"], f"{buy:,.0f}", f"{sell:,.0f}"))
+            output = output + f"\n\t__{location['location']}__:\t\t" \
+                "Max Buy: {f'{buy:,.0f}'} ISK\t\tMin Sell: {f'{sell:,.0f}'} ISK"
     return output
 
 
@@ -121,10 +121,12 @@ def last_rolled():
     return rollout.last_rolled()
 
 
+def intel(name):
+    return f"{monthly(name)}\n\n{fleet_size(name)}\n\n{fleet_comp(name)}"
+
+
 if __name__ == "__main__":
-    print(monthly("EPSYN"))
-    print(fleet_size("EPSYN"))
-    print(fleet_comp("EPSYN"))
-    print(pc("gecko", ""))
+    print(intel("EPSYN"))
+    print(pc("gecko", "-j"))
     print(roll("Romad"))
     print(fuel())

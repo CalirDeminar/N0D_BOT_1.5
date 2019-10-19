@@ -55,5 +55,5 @@ async def last_rolled(ctx):
 
 
 f = open("token", "r")
-token = f.read()
+token = f.read().strip("\n")
 bot.run(token)

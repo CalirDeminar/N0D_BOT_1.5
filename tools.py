@@ -108,7 +108,7 @@ def fuel():
             buy = float(location["data"]["buy"]["max"])
             sell = float(location["data"]["sell"]["min"])
             output = output + f"\n\t__{location['location']}__:\t\t" \
-                "Max Buy: {f'{buy:,.0f}'} ISK\t\tMin Sell: {f'{sell:,.0f}'} ISK"
+                f"Max Buy: {f'{buy:,.0f}'} ISK\t\tMin Sell: {f'{sell:,.0f}'} ISK"
     return output
 
 
